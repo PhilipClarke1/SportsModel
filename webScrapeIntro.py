@@ -16,6 +16,8 @@ season_table = soup.find('table', id="stats")
 
 #with open('testgameData.csv', 'w') as f:
 
+# we love fortnite
+
 ## open and write to testGameData.csv
 f = open('testGameData.csv', 'w', newline='')
 scrapedGames = csv.writer(f)
