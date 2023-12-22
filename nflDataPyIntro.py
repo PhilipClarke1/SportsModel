@@ -3,24 +3,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-pbp_data = nfl.import_pbp_data(years=[2023], columns=None, downcast=True, cache=False)
-
-# Filter for New York Giants (assuming 'team' is the column for the team and 'posteam' is the offensive team)
-# tenn_offense = pbp_data[(pbp_data['home_team'] == 'TEN')]
-la_offense = pbp_data[(pbp_data['home_team'] == 'CIN')]
-
-# Optionally, you can filter for specific types of offensive plays if you're interested in that
-# For example, for passing plays: ny_giants_offense = ny_giants_offense[ny_giants_offense['play_type'] == 'pass']
-
-
-# print(tenn_offense.head())
-# print(tenn_offense.describe())
-
-# tenn_offense.to_csv('tenn_offense_2021.csv', index=False)
-la_offense.to_csv('la_offense_2023.csv', index=False)
+def filter_team_pbp_to_csv(team_abbr, year):
+    
+    # Import play-by-play data for the specified year
+    pbp_data = nfl.import_pbp_data(years=[year], columns=None, downcast=True, cache=False)
+    
+    # Filter for the specified team
+    team_data = pbp_data[(pbp_data['home_team'] == team_abbr) | (pbp_data['away_team'] == team_abbr)]
+    
+    # Save the filtered data to a CSV file
+    filename = f'{team_abbr.lower()}_offense_{year}.csv'
+    team_data.to_csv(filename, index=False)
+    print(f"Data for {team_abbr} in {year} has been saved to {filename}")
 
 
-
-
-# print(pbp_data)
+filter_team_pbp_to_csv('CIN', 2023)
